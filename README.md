@@ -10,7 +10,7 @@
 
   - [Exceptions](#Exceptions)
 
-  - <a href="#Syntax Examples">Syntax Examples</a>
+  - <a href="#Syntax-Examples">Syntax Examples</a>
 
     
 
