@@ -154,7 +154,7 @@ If you want to use a method of DatabaseAdapter class you will have to create an 
   DatabaseAdapter database = new("[YOUR CONNECTION STRING]");
   object result = database.ChangeAndGetValue("[YOUR SQL QUERY]");
   
-  Console.WriteLine($"The query resulted in {object}");
+  Console.WriteLine($"The query resulted in {object.ToString}");
   ...
       
   //EXAMPLE OUTPUT: The query resulted in 205
