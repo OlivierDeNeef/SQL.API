@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Threading.Tasks;
 
 namespace SQL
 {
@@ -35,6 +36,33 @@ namespace SQL
                 using var con = new SqlConnection(ConnectionString);
                 var da = new SqlDataAdapter { SelectCommand = new SqlCommand(sqlQuery, con) };
                 da.Fill(dt);
+                return dt;
+            }
+            catch (Exception e)
+            {
+                throw new DataException("The data could not be received", e);
+            }
+        }
+
+
+        /// <summary>
+        /// Returns the data from the entered SQL Select Query in async manner.
+        /// </summary>
+        /// <param name="sqlQuery"></param>
+        /// <returns></returns>
+        public async Task<DataTable> GetDataTableAsync(string sqlQuery)
+        {
+            if (string.IsNullOrWhiteSpace(ConnectionString))
+                throw new NullReferenceException(
+                    "The connection could not be established because connection string was empty");
+            try
+            {
+                var dt = new DataTable();
+                await using var con = new SqlConnection(ConnectionString);
+                var sqlCommand =  con.CreateCommand();
+                sqlCommand.CommandText = sqlQuery;
+                var reader = await sqlCommand.ExecuteReaderAsync();
+                dt.Load(reader);
                 return dt;
             }
             catch (Exception e)
